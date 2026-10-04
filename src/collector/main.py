@@ -8,6 +8,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from collector.auth import OpenSkyTokenManager
+from collector.kafka_producer import KafkaFlightProducer
 from collector.opensky_client import OpenSkyClient
 
 
@@ -49,8 +50,11 @@ def save_sample(events):
     logger.info("Sample saved to %s", SAMPLE_FILE)
 
 
-def run_once(client: OpenSkyClient):
-    """Execute one API collection cycle."""
+def run_once(
+    client: OpenSkyClient,
+    producer: KafkaFlightProducer,
+):
+    """Execute one API collection and Kafka publishing cycle."""
 
     logger.info("Requesting aircraft states from OpenSky...")
 
@@ -62,6 +66,16 @@ def run_once(client: OpenSkyClient):
         logger.info("First event:")
         logger.info(json.dumps(events[0], indent=2))
 
+    for event in events:
+        producer.publish_event(event)
+
+    producer.flush()
+
+    logger.info(
+        "Published %s aircraft events to Kafka.",
+        len(events),
+    )
+
     save_sample(events)
 
 
@@ -70,6 +84,7 @@ def run():
 
     token_manager = OpenSkyTokenManager()
     client = OpenSkyClient(token_manager)
+    producer = KafkaFlightProducer()
 
     logger.info("OpenSky collector started.")
     logger.info(
@@ -79,7 +94,7 @@ def run():
 
     while True:
         try:
-            run_once(client)
+            run_once(client, producer)
 
         except KeyboardInterrupt:
             logger.info("Collector stopped by user.")
@@ -94,6 +109,8 @@ def run():
         )
 
         time.sleep(POLL_INTERVAL_SECONDS)
+
+    producer.flush()
 
 
 if __name__ == "__main__":
