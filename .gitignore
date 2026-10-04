@@ -12,6 +12,7 @@ venv/
 # Local data
 data/raw/
 data/*.json
+data/samples/*.json
 
 # Databricks
 .databricks/
