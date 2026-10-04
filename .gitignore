@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Local data
+data/raw/
+data/*.json
+
+# Databricks
+.databricks/
+
+# IDE / OS
+.vscode/
+.DS_Store
+
+# Testing / tooling
+.pytest_cache/
+.mypy_cache/
