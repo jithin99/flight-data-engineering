@@ -757,3 +757,11 @@ Databricks Dashboard
 The goal of this project was not just to create a visualization of flight data.
 
 The main focus was understanding and implementing the **data engineering architecture behind a real-time analytics system**.
+
+<img width="525" height="272" alt="image" src="https://github.com/user-attachments/assets/f049fc75-abf7-45e2-9308-1a86cae3c7d6" />
+<img width="1556" height="853" alt="image" src="https://github.com/user-attachments/assets/435d160d-d87b-41ba-aeb7-9aec791937b8" />
+<img width="1556" height="853" alt="image" src="https://github.com/user-attachments/assets/775435ce-e044-46c3-a928-cf0da4af1104" />
+<img width="1556" height="853" alt="image" src="https://github.com/user-attachments/assets/919479f3-7cb6-44aa-83e3-23f70395cfb1" />
+
+
+
